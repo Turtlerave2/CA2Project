@@ -5,7 +5,6 @@
 package com.lebaguette.ca2groupproject;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -20,6 +19,64 @@ public class Patient {
   private LocalDate dateJoined;
   private LinkedList<Appointment> appointments;
 
+    public Patient(String firstName, String lastName, LocalDate dateOfBirth, LocalDate dateJoined) {
+        if(dateOfBirth.compareTo(LocalDate.now()) >=0 || dateJoined.compareTo(LocalDate.now())>=0){
+        throw new IllegalArgumentException("dates cannot be after todays date.");
+        }
+        this.dateOfBirth = dateOfBirth;
+        this.dateJoined = dateJoined;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.appointments = new LinkedList<>();
+    }
+
+  
+  
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public LocalDate getDateJoined() {
+        return dateJoined;
+    }
+
+    public LinkedList<Appointment> getAppointments() {
+        return appointments;
+    }  
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDateOfBirth(LocalDate dateofBirth) {
+        if(dateofBirth.compareTo(LocalDate.now() )>=0){
+        throw new IllegalArgumentException("Birth cant be after todays date.");
+        }
+        this.dateOfBirth = dateofBirth;
+    }
+
+    public void setDateJoined(LocalDate dateJoined) {
+        
+        if(dateJoined.compareTo(LocalDate.now())>=0){
+        throw new IllegalArgumentException("Joined date cant be after todays date.");
+        }
+        this.dateJoined = dateJoined;
+    }
+  
+    
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -49,6 +106,12 @@ public class Patient {
         }
         return Objects.equals(this.dateOfBirth, other.dateOfBirth);
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" + "firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", dateJoined=" + dateJoined + ", appointments=" + appointments + '}';
+    }
   
+    
   
 }
