@@ -15,6 +15,24 @@ public class hashmap {
 
     private static final int INITIAL_CAPACITY = 20;
     private LinkedList<Entry>[] data;
+    private int size;
+
+    public hashmap() {
+        data = new LinkedList[INITIAL_CAPACITY];
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private int hashFunction(String key) {
+        int hashCode = key.hashCode();
+
+        hashCode = Math.abs(hashCode);
+        hashCode = hashCode % data.length;
+        return hashCode;
+
+    }
 
     private static class Entry {
 
