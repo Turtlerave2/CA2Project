@@ -17,14 +17,30 @@ public class hashmap {
     private LinkedList<Entry>[] data;
     private int size;
 
+    /**
+     * Creates an empty hash map with initial capacity
+     */
     public hashmap() {
         data = new LinkedList[INITIAL_CAPACITY];
     }
-
+    
+    /**
+     * returns the number of key-values stored in the hash map
+     * 
+     * @return the number of key-values stored in the hash map
+     */
     public int size() {
         return size;
     }
-
+    
+    /**
+     * Creates the hash code for the passed key using built in hashCode method. 
+     * hashCode is converted to positive int through calculating absolute method.
+     * hashCode is then reduced by the modules of the data array size. 
+     * 
+     * @param key the key to calculate hash code.
+     * @return the hash code for the passed key.
+     */
     private int hashFunction(String key) {
         int hashCode = key.hashCode();
 
