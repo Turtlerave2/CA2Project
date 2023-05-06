@@ -5,7 +5,6 @@
 package com.lebaguette.ca2groupproject;
 
 import java.time.LocalDate;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -216,8 +215,7 @@ public class hashmapTest {
     }
 
     /**
-     * Test of remove method, of class hash map.
-     * removing from empty map
+     * Test of remove method, of class hash map. removing from empty map
      */
     @org.junit.Test
     public void testRemoveEmpty() {
@@ -226,70 +224,102 @@ public class hashmapTest {
             instance.remove(1);
         });
     }
-    
+
     /**
-     * Test of remove method, of class hash map.
-     * removing from filled map
+     * Test of remove method, of class hash map. removing from filled map
      */
     @org.junit.Test
     public void testRemoveValue() {
         hashmap instance = new hashmap();
-       Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
         Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
         Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
-        
+
         Patient removed = instance.remove(1);
-        assertEquals(removed,a);
-        
+        assertEquals(removed, a);
+
         int excSize = 2;
         int actualSize = instance.size();
-        
-        assertEquals(excSize,actualSize);
-        
-        assertEquals(null,instance.get(1));
+
+        assertEquals(excSize, actualSize);
+
+        assertEquals(null, instance.get(1));
     }
-    
+
     /**
-     * Test of remove method, of class hash map.
-     * removing from filled map
+     * Test of remove method, of class hash map. removing from filled map
      */
     @org.junit.Test
     public void testRemoveValuelast() {
         hashmap instance = new hashmap();
-       Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
         Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
         Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
-        
+
         Patient removed = instance.remove(3);
-        assertEquals(removed,a);
-        
+        assertEquals(removed, a);
+
         int excSize = 2;
         int actualSize = instance.size();
-        
-        assertEquals(excSize,actualSize);
-        
-        assertEquals(null,instance.get(3));
+
+        assertEquals(excSize, actualSize);
+
+        assertEquals(null, instance.get(3));
     }
 
     /**
      * Test of containsKey method, of class hashmap.
      */
     @org.junit.Test
-    public void testContainsKey() {
-        System.out.println("containsKey");
-        String key = "";
+    public void testContainsKeyNull() {
         hashmap instance = new hashmap();
-        boolean expResult = false;
-        boolean result = instance.containsKey(key);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertThrows(IllegalArgumentException.class, () -> {
+            instance.containsKey(0);
+        });
+
+    }
+
+    /**
+     * Test of containsKey method, of class hashmap.
+     */
+    @org.junit.Test
+    public void testContainsKeyEmpty() {
+        hashmap instance = new hashmap();
+
+        boolean expected = false;
+        boolean actual = instance.containsKey(1);
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Test of containsKey method, of class hashmap.
+     */
+    @org.junit.Test
+    public void testContainsKeyvalues() {
+        hashmap instance = new hashmap();
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        instance.put(1, a);
+        instance.put(2, b);
+        
+        boolean expected = true;
+        boolean actual = instance.containsKey(1);
+
+        
+        assertEquals(expected, actual);
+        
+        assertEquals(a,instance.get(1));
+        
+        instance.remove(1);
+        assertEquals(false,instance.containsKey(1));
+        
     }
 
     /**
@@ -297,13 +327,21 @@ public class hashmapTest {
      */
     @org.junit.Test
     public void testGetKeys() {
-        System.out.println("getKeys");
         hashmap instance = new hashmap();
-        String[] expResult = null;
-        String[] result = instance.getKeys();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.now());
+        instance.put(1, a);
+        instance.put(2, b);
+        instance.put(3, c);
+        
+        int [] expected = {1,2,3};
+        int[] actual = instance.getKeys();
+        
+        assertArrayEquals(expected,actual);
+       
+        assertEquals(3,instance.size());
+        
     }
 
     /**
