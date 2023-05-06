@@ -121,9 +121,10 @@ public class hashmap {
     /**
      * removes the patient suing the parameter key from the map and returns
      * their value. If the key is not in the map it returns null.
-     * 
+     *
      * @param key the key for the patient to remove from the map
-     * @return the value of the patient to be removed, or returns null if key wasn't found.
+     * @return the value of the patient to be removed, or returns null if key
+     * wasn't found.
      * @throws IllegalArgumentException if key parameter is null
      */
     public Patient remove(String key) {
@@ -144,9 +145,9 @@ public class hashmap {
     }
 
     /**
-     * Searches through the map to see if the passed key is in the map. will return
-     * true if found otherwise false.
-     * 
+     * Searches through the map to see if the passed key is in the map. will
+     * return true if found otherwise false.
+     *
      * @param key the key to search for in the map.
      * @return true if the key is found in the map, false otherwise.
      * @throws IllegalArgumentException if key parameter is null
@@ -166,6 +167,11 @@ public class hashmap {
         return false;
     }
 
+    /**
+     * returns an array of all the keys in the map.
+     *
+     * @return an array of all keys in the map.
+     */
     public String[] getKeys() {
         String[] keys = new String[size];
         int count = 0;
@@ -180,6 +186,11 @@ public class hashmap {
         return keys;
     }
 
+    /**
+     * returns an Patient array of all the values in the map.
+     *
+     * @return an array of all values in the map.
+     */
     public Patient[] getValues() {
         Patient[] patientValues = new Patient[size];
         int count = 0;
