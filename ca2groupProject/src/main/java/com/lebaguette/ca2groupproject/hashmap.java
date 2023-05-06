@@ -23,22 +23,22 @@ public class hashmap {
     public hashmap() {
         data = new LinkedList[INITIAL_CAPACITY];
     }
-    
+
     /**
      * returns the number of key-values stored in the hash map
-     * 
+     *
      * @return the number of key-values stored in the hash map
      */
     public int size() {
         return size;
     }
-    
+
     /**
-     * Creates the hash code for the passed key using built in hashCode method. 
-     * hashCode is converted to positive int through calculating absolute method.
-     * hashCode is then reduced by the modules of the data array size. 
-     * 
-     * @param key the key to calculate hash code.
+     * Creates the hash code for the passed key using built in hashCode method.
+     * hashCode is converted to positive int through calculating absolute
+     * method. hashCode is then reduced by the modules of the data array size.
+     *
+     * @param key the key to calculate hash code slot.
      * @return the hash code for the passed key.
      */
     private int hashFunction(String key) {
@@ -50,6 +50,19 @@ public class hashmap {
 
     }
 
+    /**
+     * Method to put the value for the associating key. If the map already
+     * contains the key the old value is replaced by the new value. Returns the
+     * old value if updated. If the slot was empty then no old value is returned
+     * only null.
+     *
+     * @param key the key to calculate hash code slot.
+     * @param value to be linked with the key.
+     * @return the old value in the slot or null if the slot was null
+     * @throws IllegalArgumentException if either key or value parameter's are
+     * null
+     *
+     */
     public Patient put(String key, Patient value) {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key or value cannot be null");
@@ -79,6 +92,15 @@ public class hashmap {
         }
     }
 
+    /**
+     * Returns the value to which the key is mapped to, will return null if map
+     * doesn't contain it.
+     *
+     * @param key the key linked to the value to be returned.
+     * @return the value to where the key is mapped, or null if doesn't contain
+     * it.
+     * @throws IllegalArgumentException if key parameter is null
+     */
     public Patient get(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
@@ -96,6 +118,14 @@ public class hashmap {
         }
     }
 
+    /**
+     * removes the patient suing the parameter key from the map and returns
+     * their value. If the key is not in the map it returns null.
+     * 
+     * @param key the key for the patient to remove from the map
+     * @return the value of the patient to be removed, or returns null if key wasn't found.
+     * @throws IllegalArgumentException if key parameter is null
+     */
     public Patient remove(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
@@ -113,6 +143,14 @@ public class hashmap {
         return null;
     }
 
+    /**
+     * Searches through the map to see if the passed key is in the map. will return
+     * true if found otherwise false.
+     * 
+     * @param key the key to search for in the map.
+     * @return true if the key is found in the map, false otherwise.
+     * @throws IllegalArgumentException if key parameter is null
+     */
     public boolean containsKey(String key) {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
