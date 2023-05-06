@@ -34,6 +34,35 @@ public class hashmap {
 
     }
 
+    public Patient put(String key, Patient value) {
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("Key or value cannot be null");
+        }
+
+        int slot = hashFunction(key);
+
+        if (data[slot] == null) {
+            data[slot] = new LinkedList<>();
+            Entry newEntry = new Entry(key, value);
+            data[slot].add(newEntry);
+            size++;
+            return null;
+        } else {
+            LinkedList<Entry> entries = data[slot];
+            for (Entry entry : entries) {
+                if (entry.key.equals(key)) {
+                    Patient oldValue = entry.value;
+                    entry.value = value;
+                    return oldValue;
+                }
+            }
+            Entry newEntry = new Entry(key, value);
+            entries.add(newEntry);
+            size++;
+            return null;
+        }
+    }
+
     private static class Entry {
 
         private final String key;
