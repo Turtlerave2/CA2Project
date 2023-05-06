@@ -323,7 +323,7 @@ public class hashmapTest {
     }
 
     /**
-     * Test of getKeys method, of class hashmap.
+     * Test of getKeys method, of class hash map, with values
      */
     @org.junit.Test
     public void testGetKeys() {
@@ -343,19 +343,55 @@ public class hashmapTest {
         assertEquals(3,instance.size());
         
     }
-
     /**
-     * Test of getValues method, of class hashmap.
+     * Test of getKeys method, of class hash map, with values
      */
     @org.junit.Test
-    public void testGetValues() {
-        System.out.println("getValues");
+    public void testGetKeysEmpty() {
+        hashmap instance = new hashmap(); 
+        
+        int [] expected = {};
+        int[] actual = instance.getKeys();
+        
+        assertArrayEquals(expected,actual);
+       
+        assertEquals(0,instance.size());
+        
+    }
+
+    /**
+     * Test of getValues method, of class hash map. with values in the map
+     */
+    @org.junit.Test
+    public void testGetValuesWithValues() {
         hashmap instance = new hashmap();
-        Patient[] expResult = null;
-        Patient[] result = instance.getValues();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.now());
+        instance.put(1, a);
+        instance.put(2, b);
+        instance.put(3, c);
+        
+        Patient [] expected = {a,b,c};
+        Patient [] actual = instance.getValues();
+        
+        assertArrayEquals(expected,actual);
+       
+        assertEquals(3,instance.size());
+    }
+    /**
+     * Test of getValues method, of class hash map. with values in the map
+     */
+    @org.junit.Test
+    public void testGetValuesEmpty() {
+        hashmap instance = new hashmap();
+
+        Patient [] expected = {};
+        Patient [] actual = instance.getValues();
+        
+        assertArrayEquals(expected,actual);
+       
+        assertEquals(0,instance.size());
     }
 
 }
