@@ -112,6 +112,20 @@ public class hashmap {
         return false;
     }
 
+    public String[] getKeys() {
+        String[] keys = new String[size];
+        int count = 0;
+
+        for (LinkedList<Entry> entries : data) {
+            if (entries != null) {
+                for (Entry entry : entries) {
+                    keys[count++] = entry.key;
+                }
+            }
+        }
+        return keys;
+    }
+
     private static class Entry {
 
         private final String key;
