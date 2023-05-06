@@ -126,6 +126,21 @@ public class hashmap {
         return keys;
     }
 
+    public Patient[] getValues() {
+        Patient[] patientValues = new Patient[size];
+        int count = 0;
+
+        for (LinkedList<Entry> slot : data) {
+            if (slot != null) {
+                for (Entry entry : slot) {
+                    patientValues[count] = entry.value;
+                    count++;
+                }
+            }
+        }
+        return patientValues;
+    }
+
     private static class Entry {
 
         private final String key;
