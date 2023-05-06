@@ -48,8 +48,8 @@ public class hashmap {
             size++;
             return null;
         } else {
-            LinkedList<Entry> entries = data[slot];
-            for (Entry entry : entries) {
+          
+            for (Entry entry : data[slot]) {
                 if (entry.key.equals(key)) {
                     Patient oldValue = entry.value;
                     entry.value = value;
@@ -57,9 +57,23 @@ public class hashmap {
                 }
             }
             Entry newEntry = new Entry(key, value);
-            entries.add(newEntry);
+            data[slot].add(newEntry);
             size++;
             return null;
+        }
+    }
+
+    public Patient get(String key) {
+        int slot = hashFunction(key);
+        if (data[slot]!= null) {
+            for (Entry a : data[slot]) {
+                if (a.key.equals(key)) {
+                    return a.value;
+                }
+            }
+            return null;
+        }else{
+        return null;
         }
     }
 
