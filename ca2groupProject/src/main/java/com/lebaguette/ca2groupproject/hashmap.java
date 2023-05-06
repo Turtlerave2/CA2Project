@@ -97,6 +97,21 @@ public class hashmap {
         return null;
     }
 
+    public boolean containsKey(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
+        int slot = hashFunction(key);
+        if (data[slot] != null) {
+            for (Entry entry : data[slot]) {
+                if (entry.key.equals(key)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private static class Entry {
 
         private final String key;
