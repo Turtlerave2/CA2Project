@@ -87,7 +87,7 @@ public class Application {
                         System.out.println("File not found");
                     }
 
-                    System.out.println("Exiting Practice Management System");
+                    System.out.println("Exiting System");
                     return;
                     default:
                         System.out.println("Invalid choice, please try again.");
