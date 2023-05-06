@@ -12,6 +12,7 @@ import java.util.LinkedList;
  * @author leoze
  */
 public class hashmap {
+
     //the initial capapcity of the hashmap
     private static final int INITIAL_CAPACITY = 20;
     //the array linkedlist used to store the key-value pairs
@@ -211,16 +212,18 @@ public class hashmap {
     /**
      * class entry represents an entry in hash table, based on key-value pair.
      * the key is string and the value is patient object.
-     * 
+     *
      */
     private static class Entry {
+
         //key associated with the entry
         private final String key;
         //value associated with the entry
         private Patient value;
-        
+
         /**
          * Constructs a new entry with the key and value parameters passed.
+         *
          * @param key the key for the entry.
          * @param value the value for the entry.
          */
@@ -228,9 +231,10 @@ public class hashmap {
             this.key = key;
             this.value = value;
         }
-        
+
         /**
          * returns the key linked with the entry.
+         *
          * @return the key linked with the entry.
          */
         public String getKey() {
@@ -239,6 +243,7 @@ public class hashmap {
 
         /**
          * returns the value linked with the entry.
+         *
          * @return the value linked with the entry.
          */
         public Patient getValue() {
@@ -246,9 +251,9 @@ public class hashmap {
         }
 
         /**
-         * Updates the value linked to the entry to the given value.
-         * Returns the old value.
-         * 
+         * Updates the value linked to the entry to the given value. Returns the
+         * old value.
+         *
          * @param newValue the new value to link with the entry
          * @return the old value linked with the entry.
          */
