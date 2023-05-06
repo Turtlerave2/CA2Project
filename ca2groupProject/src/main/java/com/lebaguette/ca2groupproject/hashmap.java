@@ -44,9 +44,9 @@ public class hashmap {
      * @param key the key to calculate hash code slot.
      * @return the hash code for the passed key.
      */
-    private int hashFunction(String key) {
-        int hashCode = key.hashCode();
-
+    private int hashFunction(int key) {
+       
+        int hashCode = Integer.hashCode(key);
         hashCode = Math.abs(hashCode);
         hashCode = hashCode % data.length;
         return hashCode;
@@ -66,8 +66,8 @@ public class hashmap {
      * null
      *
      */
-    public Patient put(String key, Patient value) {
-        if (key == null || value == null) {
+    public Patient put(int key, Patient value) {
+        if (key == 0 || value == null) {
             throw new IllegalArgumentException("Key or value cannot be null");
         }
 
@@ -82,7 +82,7 @@ public class hashmap {
         } else {
 
             for (Entry entry : data[slot]) {
-                if (entry.key.equals(key)) {
+                if (entry.getKey() == key) {
                     Patient oldValue = entry.value;
                     entry.value = value;
                     return oldValue;
@@ -104,14 +104,14 @@ public class hashmap {
      * it.
      * @throws IllegalArgumentException if key parameter is null
      */
-    public Patient get(String key) {
-        if (key == null) {
+    public Patient get(int key) {
+        if (key == 0) {
             throw new IllegalArgumentException("Key cannot be null");
         }
         int slot = hashFunction(key);
         if (data[slot] != null) {
             for (Entry a : data[slot]) {
-                if (a.key.equals(key)) {
+                if (a.getKey() == key) {
                     return a.value;
                 }
             }
@@ -130,14 +130,14 @@ public class hashmap {
      * wasn't found.
      * @throws IllegalArgumentException if key parameter is null
      */
-    public Patient remove(String key) {
-        if (key == null) {
+    public Patient remove(int key) {
+        if (key == 0) {
             throw new IllegalArgumentException("Key cannot be null");
         }
         int slot = hashFunction(key);
         if (data[slot] != null) {
             for (Entry entry : data[slot]) {
-                if (entry.key.equals(key)) {
+                if (entry.getKey() == key) {
                     data[slot].remove(entry);
                     size--;
                     return entry.value;
@@ -155,14 +155,14 @@ public class hashmap {
      * @return true if the key is found in the map, false otherwise.
      * @throws IllegalArgumentException if key parameter is null
      */
-    public boolean containsKey(String key) {
-        if (key == null) {
+    public boolean containsKey(int key) {
+        if (key == 0) {
             throw new IllegalArgumentException("Key cannot be null");
         }
         int slot = hashFunction(key);
         if (data[slot] != null) {
             for (Entry entry : data[slot]) {
-                if (entry.key.equals(key)) {
+                if (entry.getKey() == key) {
                     return true;
                 }
             }
@@ -175,8 +175,8 @@ public class hashmap {
      *
      * @return an array of all keys in the map.
      */
-    public String[] getKeys() {
-        String[] keys = new String[size];
+    public int[] getKeys() {
+        int[] keys = new int[size];
         int count = 0;
 
         for (LinkedList<Entry> entries : data) {
@@ -217,7 +217,7 @@ public class hashmap {
     private static class Entry {
 
         //key associated with the entry
-        private final String key;
+        private final int key;
         //value associated with the entry
         private Patient value;
 
@@ -227,7 +227,7 @@ public class hashmap {
          * @param key the key for the entry.
          * @param value the value for the entry.
          */
-        public Entry(String key, Patient value) {
+        public Entry(int key, Patient value) {
             this.key = key;
             this.value = value;
         }
@@ -237,7 +237,7 @@ public class hashmap {
          *
          * @return the key linked with the entry.
          */
-        public String getKey() {
+        public int getKey() {
             return key;
         }
 
