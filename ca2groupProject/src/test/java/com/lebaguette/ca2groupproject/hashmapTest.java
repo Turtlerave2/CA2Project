@@ -15,8 +15,7 @@ import static org.junit.Assert.*;
 public class hashmapTest {
 
     /**
-     * Test of size method, of class hash map.
-     * empty map
+     * Test of size method, of class hash map. empty map
      */
     @org.junit.Test
     public void testSizeEmptyMap() {
@@ -25,10 +24,9 @@ public class hashmapTest {
         int result = instance.size();
         assertEquals(expResult, result);
     }
-    
-     /**
-     * Test of size method, of class hash map.
-     * one value
+
+    /**
+     * Test of size method, of class hash map. one value
      */
     @org.junit.Test
     public void testSizeNonEmptyMap() {
@@ -38,53 +36,50 @@ public class hashmapTest {
         int expResult = 1;
         int result = instance.size();
         assertEquals(expResult, result);
-        
+
         Patient c = instance.get(2);
-        assertEquals(a,c);
+        assertEquals(a, c);
     }
 
-     /**
-     * Test of size method, of class hash map.
-     * size after removing one
+    /**
+     * Test of size method, of class hash map. size after removing one
      */
     @org.junit.Test
     public void testSizeAfterRemoving() {
         hashmap instance = new hashmap();
         Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-         Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
         instance.put(2, a);
         instance.put(3, b);
         instance.remove(2);
         int expResult = 1;
         int result = instance.size();
-        assertEquals(expResult, result);  
-        
+        assertEquals(expResult, result);
+
         Patient c = instance.get(2);
-        assertEquals(null,c);
+        assertEquals(null, c);
     }
-     /**
-     * Test of size method, of class hash map.
-     * updating value
+
+    /**
+     * Test of size method, of class hash map. updating value
      */
     @org.junit.Test
     public void testSizeAddingDuplicate() {
         hashmap instance = new hashmap();
         Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-         Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
         instance.put(2, a);
         instance.put(2, b);
         int expResult = 1;
         int result = instance.size();
-        assertEquals(expResult, result);  
-        
+        assertEquals(expResult, result);
+
         Patient c = instance.get(2);
-        assertEquals(b,c);
+        assertEquals(b, c);
     }
-     
-    
+
     /**
-     * Test of put method, of class hash map.
-     * putting value in
+     * Test of put method, of class hash map. putting value in
      */
     @org.junit.Test
     public void testPutValue() {
@@ -93,32 +88,96 @@ public class hashmapTest {
         instance.put(2, a);
         Patient expResult = a;
         Patient result = instance.get(2);
-        assertEquals(expResult, result);  
-        
-       int sizeExp = 1;
-       int sizeAct = instance.size();
-        assertEquals(sizeExp, sizeAct);  
-    }
-    
-    /**
-     * Test of put method, of class hash map.
-     * putting value in
-     */
-    @org.junit.Test
-    public void testUpdateValue() {
-        hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        instance.put(2, a);
-        Patient expResult = a;
-        Patient result = instance.get(2);
-        assertEquals(expResult, result);  
-        
-       int sizeExp = 1;
-       int sizeAct = instance.size();
-        assertEquals(sizeExp, sizeAct);  
-        
+        assertEquals(expResult, result);
+
+        int sizeExp = 1;
+        int sizeAct = instance.size();
+        assertEquals(sizeExp, sizeAct);
     }
 
+    /**
+     * Test of put method, of class hash map. updating value
+     */
+    @org.junit.Test
+    public void testPutUpdateValue() {
+        hashmap instance = new hashmap();
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+
+        instance.put(2, a);
+        instance.put(2, b);
+        Patient expResult = b;
+        Patient result = instance.get(2);
+        assertEquals(expResult, result);
+
+        int sizeExp = 1;
+        int sizeAct = instance.size();
+        assertEquals(sizeExp, sizeAct);
+    }
+
+    /**
+     * Test of put method, of class hash map. putting value in beginning
+     */
+    @org.junit.Test
+    public void testPutaddBegining() {
+        hashmap instance = new hashmap();
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+
+        instance.put(1, a);
+        instance.put(2, b);
+        Patient expResult = a;
+        Patient result = instance.get(1);
+        assertEquals(expResult, result);
+
+        int sizeExp = 2;
+        int sizeAct = instance.size();
+        assertEquals(sizeExp, sizeAct);
+    }
+
+    /**
+     * Test of put method, of class hash map. putting value in the end
+     */
+    @org.junit.Test
+    public void testPutaddEnd() {
+        hashmap instance = new hashmap();
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+
+        instance.put(20, b);
+        Patient expResult = b;
+        Patient result = instance.get(20);
+        assertEquals(expResult, result);
+
+        int sizeExp = 1;
+        int sizeAct = instance.size();
+        assertEquals(sizeExp, sizeAct);
+    }
+
+    /**
+     * Test of put method, of class hash map. putting empty value
+     */
+    @org.junit.Test
+    public void testPutEmptyvalue() {
+        hashmap instance = new hashmap();
+        assertThrows(IllegalArgumentException.class, () -> {
+            instance.put(0, null);
+        });
+    }
+
+    /**
+     * Test of put method, of class hash map. putting empty value
+     */
+    @org.junit.Test
+    public void testPutEmptyKey() {
+        hashmap instance = new hashmap();
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        assertThrows(IllegalArgumentException.class, () -> {
+            instance.put(2, a);
+        });
+    }
+
+    
+    
     /**
      * Test of get method, of class hashmap.
      */
@@ -191,5 +250,5 @@ public class hashmapTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }
