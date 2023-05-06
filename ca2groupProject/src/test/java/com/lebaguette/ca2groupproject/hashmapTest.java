@@ -176,36 +176,105 @@ public class hashmapTest {
         });
     }
 
-    
-    
     /**
-     * Test of get method, of class hashmap.
+     * Test of get method, of class hash map. with empty map
      */
     @org.junit.Test
-    public void testGet() {
-        System.out.println("get");
-        String key = "";
+    public void testGetEmpty() {
         hashmap instance = new hashmap();
-        Patient expResult = null;
-        Patient result = instance.get(key);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Patient a = instance.get(1);
+        assertEquals(null, a);
+
     }
 
     /**
-     * Test of remove method, of class hashmap.
+     * Test of get method, of class hash map. with some values
      */
     @org.junit.Test
-    public void testRemove() {
-        System.out.println("remove");
-        String key = "";
+    public void testGetwithValues() {
         hashmap instance = new hashmap();
-        Patient expResult = null;
-        Patient result = instance.remove(key);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Patient a = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+
+        instance.put(1, a);
+        Patient b = instance.get(1);
+        assertEquals(b, a);
+
+        int expectSize = 1;
+        int actualSize = instance.size();
+        assertEquals(expectSize, actualSize);
+    }
+
+    /**
+     * Test of get method, of class hash map. with empty map
+     */
+    @org.junit.Test
+    public void testGetKeyNull() {
+        hashmap instance = new hashmap();
+        assertThrows(IllegalArgumentException.class, () -> {
+            instance.get(0);
+        });
+    }
+
+    /**
+     * Test of remove method, of class hash map.
+     * removing from empty map
+     */
+    @org.junit.Test
+    public void testRemoveEmpty() {
+        hashmap instance = new hashmap();
+        assertThrows(IllegalArgumentException.class, () -> {
+            instance.remove(1);
+        });
+    }
+    
+    /**
+     * Test of remove method, of class hash map.
+     * removing from filled map
+     */
+    @org.junit.Test
+    public void testRemoveValue() {
+        hashmap instance = new hashmap();
+       Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
+        instance.put(1, a);
+        instance.put(2, b);
+        instance.put(3, c);
+        
+        Patient removed = instance.remove(1);
+        assertEquals(removed,a);
+        
+        int excSize = 2;
+        int actualSize = instance.size();
+        
+        assertEquals(excSize,actualSize);
+        
+        assertEquals(null,instance.get(1));
+    }
+    
+    /**
+     * Test of remove method, of class hash map.
+     * removing from filled map
+     */
+    @org.junit.Test
+    public void testRemoveValuelast() {
+        hashmap instance = new hashmap();
+       Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
+        instance.put(1, a);
+        instance.put(2, b);
+        instance.put(3, c);
+        
+        Patient removed = instance.remove(3);
+        assertEquals(removed,a);
+        
+        int excSize = 2;
+        int actualSize = instance.size();
+        
+        assertEquals(excSize,actualSize);
+        
+        assertEquals(null,instance.get(3));
     }
 
     /**
