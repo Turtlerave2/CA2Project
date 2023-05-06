@@ -48,7 +48,7 @@ public class hashmap {
             size++;
             return null;
         } else {
-          
+
             for (Entry entry : data[slot]) {
                 if (entry.key.equals(key)) {
                     Patient oldValue = entry.value;
@@ -64,17 +64,37 @@ public class hashmap {
     }
 
     public Patient get(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
         int slot = hashFunction(key);
-        if (data[slot]!= null) {
+        if (data[slot] != null) {
             for (Entry a : data[slot]) {
                 if (a.key.equals(key)) {
                     return a.value;
                 }
             }
             return null;
-        }else{
-        return null;
+        } else {
+            return null;
         }
+    }
+
+    public Patient remove(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Key cannot be null");
+        }
+        int slot = hashFunction(key);
+        if (data[slot] != null) {
+            for (Entry entry : data[slot]) {
+                if (entry.key.equals(key)) {
+                    data[slot].remove(entry);
+                    size--;
+                    return entry.value;
+                }
+            }
+        }
+        return null;
     }
 
     private static class Entry {
