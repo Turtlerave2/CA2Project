@@ -100,6 +100,7 @@ public class Application {
                         System.out.println("File was not found");
                     }
 
+                  
                     try {
                         File input = new File("output.txt");
                         PrintWriter filewrite = new PrintWriter(input);
