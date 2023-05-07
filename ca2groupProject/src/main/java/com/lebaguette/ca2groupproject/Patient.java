@@ -16,7 +16,7 @@ public class Patient {
     private String lastName;
     private LocalDate dateOfBirth;
     private LocalDate dateJoined;
-    private LinkedList<Appointment> appointments;
+    private LinkedList appointments;
 
     /**
      * Constructs a new Patient with the passed arguments.
@@ -36,7 +36,6 @@ public class Patient {
         this.dateJoined = dateJoined;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.appointments = new LinkedList<>();
     }
 
     /**
