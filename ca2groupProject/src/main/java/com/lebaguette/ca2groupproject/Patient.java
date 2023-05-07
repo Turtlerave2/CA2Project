@@ -141,7 +141,9 @@ public class Patient {
         }
         appointments.add(ap);
     }
-
+    /**
+     * Method that removes appointments that are outstanding
+     */
     public void clearAppointments() {
         if (appointments != null) {
             appointments.clear();

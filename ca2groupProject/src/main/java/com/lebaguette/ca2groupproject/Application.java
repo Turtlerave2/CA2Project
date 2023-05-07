@@ -6,7 +6,6 @@ package com.lebaguette.ca2groupproject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -80,7 +79,14 @@ public class Application {
                         }
                         break;
                     case 3:
-                        // display all patients
+                        Patient[] patients = practice.getValues();
+
+                        for (Patient patient : patients) {
+                            System.out.println("Name: " + patient.getFirstName() + " " + patient.getLastName());
+                            System.out.println("Date of birth: " + patient.getDateOfBirth());
+                            System.out.println("Date joined: " + patient.getDateJoined());
+                            System.out.println();
+                        }
                         break;
                     case 4:
                         System.out.print("Enter the patient's date of birth (yyyy-mm-dd): ");
@@ -124,39 +130,40 @@ public class Application {
                         break;
                     case 6:
                         try {
-                            File input = new File("patients.txt");
-                            Scanner KB = new Scanner(input);
+                        File input = new File("patients.txt");
+                        Scanner KB = new Scanner(input);
 
-                            while (KB.hasNextLine()) {
-                                String line = KB.nextLine();
-                                String[] values = line.split(",");
-                                String FirstName = values[0];
-                                String LastName = values[1];
-                                LocalDate dob = LocalDate.parse(values[3]);
-                                LocalDate joinedDate = LocalDate.parse(values[4]);
-                                Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
+                        while (KB.hasNextLine()) {
+                            String line = KB.nextLine();
+                            String[] values = line.split(",");
+                            String FirstName = values[0];
+                            String LastName = values[1];
+                            LocalDate dob = LocalDate.parse(values[3]);
+                            LocalDate joinedDate = LocalDate.parse(values[4]);
+                            Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
 
-                                for (int i = 4; i < values.length; i += 6) {
-                                    String issue = values[i];
-                                    LocalDate date = LocalDate.parse(values[i + 1]);
-                                    int triageLevel = Integer.parseInt(values[i + 2]);
-                                    String doctorName = values[i + 3];
+                            for (int i = 4; i < values.length; i += 6) {
+                                String issue = values[i];
+                                LocalDate date = LocalDate.parse(values[i + 1]);
+                                int triageLevel = Integer.parseInt(values[i + 2]);
+                                String doctorName = values[i + 3];
 
-                                    Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel,
-                                            doctorName);
-                                    patient.addAppointment(ap);
-                                }
-                                practice.put(1, patient);
+                                Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel,
+                                        doctorName);
+                                patient.addAppointment(ap);
                             }
-                            KB.close();
-                        } catch (FileNotFoundException e) {
-                            System.out.println("File was not found");
+                            practice.put(1, patient);
                         }
+                        KB.close();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("File was not found");
+                    }
 
-                        try {
-                            File input = new File("output.txt");
-                            PrintWriter filewrite = new PrintWriter(input);
-                            Patient[] patarray = practice.getValues();
+                    try {
+                        File input = new File("output.txt");
+                        PrintWriter filewrite = new PrintWriter(input);
+                        Patient[] patarray = practice.getValues();
+                        
 
                             for (Patient patient : patarray) {
                                 filewrite.print("," + patient.getFirstName() + " , ");
@@ -183,14 +190,16 @@ public class Application {
 
                         System.out.println("Exiting System");
                         return;
-                    default:
+                    
+                default:
                         System.out.println("Invalid choice, please try again.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Enter a number for one of the options");
                 kb.next();
+            
             }
-        } while (choice != 6);
+            
+        }while (choice != 6);
     }
-
-}
+    }
