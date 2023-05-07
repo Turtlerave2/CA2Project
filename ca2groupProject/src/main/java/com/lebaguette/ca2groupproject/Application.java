@@ -31,25 +31,26 @@ public class Application {
             menu.menu();
             try {
                 choice = kb.nextInt();
-
+                int counter =1;
                 switch (choice) {
+                    
                     case 1:
                         System.out.println("Enter patient details:");
                         System.out.print("First Name: ");
                         String firstName = kb.next();
                         System.out.print("Last Name: ");
                         String lastName = kb.next();
-                        System.out.print("Date of Birth (dd-mm-yyyy): ");
+                        System.out.print("Date of Birth (yyyy-mm-dd): ");
                         String dobStr = kb.next();
                         LocalDate dateOfBirth = LocalDate.parse(dobStr);
-                        LocalDate dateJoined = LocalDate.now();
+                        LocalDate dateJoined = LocalDate.now().minusDays(1);
 
                         // Check if the patient already exists in the practice
-                        if (practice.containsKey(dateOfBirth.hashCode())) {
+                        if (practice.containsKey(counter)) {
                             System.out.println("A patient with the same details already exists.");
                         } else {
                             Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
-                            practice.put(dateOfBirth.hashCode(), newPatient);
+                            practice.put(counter++, newPatient);
                             System.out.println("Patient added successfully.");
                         }
 
@@ -60,12 +61,12 @@ public class Application {
                         LocalDate dateOfBirthToDelete = LocalDate.parse(dobToDelete);
 
                         // Check if the patient exists in the practice
-                        if (practice.containsKey(dateOfBirthToDelete.hashCode())) {
+                        if (practice.containsKey(counter)) {
                             // Retrieve the patient from the hashmap
-                            Patient patientToDelete = practice.get(dateOfBirthToDelete.hashCode());
+                            Patient patientToDelete = practice.get(counter);
 
                             // Remove the patient from the practice
-                            practice.remove(dateOfBirthToDelete.hashCode());
+                            practice.remove(counter);
 
                             // Remove any outstanding appointments for the patient
                             patientToDelete.clearAppointments();
@@ -91,9 +92,9 @@ public class Application {
                         LocalDate dateOfBirthToAddAppointment = LocalDate.parse(dobToAddAppointment);
 
                         // Check if the patient exists in the practice
-                        if (practice.containsKey(dateOfBirthToAddAppointment.hashCode())) {
+                        if (practice.containsKey(counter)) {
                             // Retrieve the patient from the hashmap
-                            Patient patientToAddAppointment = practice.get(dateOfBirthToAddAppointment.hashCode());
+                            Patient patientToAddAppointment = practice.get(counter);
 
                             // Generate a random triage level between 1 and 5
                             int triageLevel = (int) (Math.random() * 5) + 1;
@@ -105,7 +106,7 @@ public class Application {
                             String appointmentDate = kb.next();
                             LocalDate date = LocalDate.parse(appointmentDate);
                             System.out.print("Enter the doctor's full name: ");
-                            String doctorFullName = kb.next();
+                            String doctorFullName = kb.nextLine();
 
                             // Create a new appointment
                             Appointment newAppointment = new Appointment(patientToAddAppointment.getFirstName(),
@@ -116,7 +117,9 @@ public class Application {
                             patientToAddAppointment.addAppointment(newAppointment);
 
                             System.out.println("New appointment created and added to the queue:");
-                            System.out.println(newAppointment);
+                            System.out.println("Patient name: " + newAppointment.getFirstName());
+                            System.out.println("issue: " + newAppointment.getIssue());
+                            System.out.println("Doctor: " +newAppointment.getDoctorFullName());
                         } else {
                             System.out.println("Patient not found.");
                         }
