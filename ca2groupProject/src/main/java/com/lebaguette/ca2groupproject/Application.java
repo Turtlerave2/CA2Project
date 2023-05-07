@@ -20,15 +20,15 @@ public class Application {
     public static void main(String[] args) {
         MenuOptions menu = new MenuOptions();
 
-        //hashmap object?
+        // hashmap object?
         hashmap practice = new hashmap();
         Scanner kb = new Scanner(System.in);
 
         int choice = -1;
-        //case 6 will be the reading patient file
-        //and writing to a file the data
-        //and then the program will end, so 
-        //the writing will be done before program closes
+        // case 6 will be the reading patient file
+        // and writing to a file the data
+        // and then the program will end, so
+        // the writing will be done before program closes
         do {
             menu.menu();
             try {
@@ -36,98 +36,151 @@ public class Application {
 
                 switch (choice) {
                     case 1:
-                    System.out.println("Enter patient details:");
-                    System.out.print("First Name: ");
-                    String firstName = kb.next();
-                    System.out.print("Last Name: ");
-                    String lastName = kb.next();
-                    System.out.print("Date of Birth (dd-mm-yyyy): ");
-                    String dobStr = kb.next();
-                    LocalDate dateOfBirth = LocalDate.parse(dobStr);
-                    LocalDate dateJoined = LocalDate.now();
-                
-                    // Check if the patient already exists in the practice
-                    if (practice.containsKey(dateOfBirth.hashCode())) {
-                        System.out.println("A patient with the same details already exists.");
-                    } else {
-                        Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
-                        practice.put(dateOfBirth.hashCode(), newPatient);
-                        System.out.println("Patient added successfully.");
-                    }
-                   
+                        System.out.println("Enter patient details:");
+                        System.out.print("First Name: ");
+                        String firstName = kb.next();
+                        System.out.print("Last Name: ");
+                        String lastName = kb.next();
+                        System.out.print("Date of Birth (dd-mm-yyyy): ");
+                        String dobStr = kb.next();
+                        LocalDate dateOfBirth = LocalDate.parse(dobStr);
+                        LocalDate dateJoined = LocalDate.now();
+
+                        // Check if the patient already exists in the practice
+                        if (practice.containsKey(dateOfBirth.hashCode())) {
+                            System.out.println("A patient with the same details already exists.");
+                        } else {
+                            Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
+                            practice.put(dateOfBirth.hashCode(), newPatient);
+                            System.out.println("Patient added successfully.");
+                        }
+
                         break;
                     case 2:
-                        //delete patient
-                        break;
+                    System.out.print("Enter the patient's date of birth (yyyy-mm-dd): ");
+                    String dobToDelete = kb.next();
+                    LocalDate dateOfBirthToDelete = LocalDate.parse(dobToDelete);
+                
+                    // Check if the patient exists in the practice
+                    if (practice.containsKey(dateOfBirthToDelete.hashCode())) {
+                        // Retrieve the patient from the hashmap
+                        Patient patientToDelete = practice.get(dateOfBirthToDelete.hashCode());
+                
+                        // Remove the patient from the practice
+                        practice.remove(dateOfBirthToDelete.hashCode());
+                
+                        // Remove any outstanding appointments for the patient
+                        patientToDelete.clearAppointments();
+                
+                        System.out.println("Patient deleted successfully.");
+                    } else {
+                        System.out.println("Patient not found.");
+                    }
+                    break;
                     case 3:
-                        //display all patients
+                        // display all patients
                         break;
                     case 4:
-                        //create new appointment for patient
-                        break;
+                    System.out.print("Enter the patient's date of birth (yyyy-mm-dd): ");
+                    String dobToAddAppointment = kb.next();
+                    LocalDate dateOfBirthToAddAppointment = LocalDate.parse(dobToAddAppointment);
+                
+                    // Check if the patient exists in the practice
+                    if (practice.containsKey(dateOfBirthToAddAppointment.hashCode())) {
+                        // Retrieve the patient from the hashmap
+                        Patient patientToAddAppointment = practice.get(dateOfBirthToAddAppointment.hashCode());
+                
+                        // Generate a random triage level between 1 and 5
+                        int triageLevel = (int) (Math.random() * 5) + 1;
+                
+                        // Prompt the user to enter appointment details
+                        System.out.print("Enter the issue: ");
+                        String issue = kb.next();
+                        System.out.print("Enter the appointment date (yyyy-mm-dd): ");
+                        String appointmentDate = kb.next();
+                        LocalDate date = LocalDate.parse(appointmentDate);
+                        System.out.print("Enter the doctor's full name: ");
+                        String doctorFullName = kb.next();
+                
+                        // Create a new appointment
+                        Appointment newAppointment = new Appointment(patientToAddAppointment.getFirstName(),
+                                patientToAddAppointment.getLastName(), patientToAddAppointment.getDateOfBirth(),
+                                issue, date, triageLevel, doctorFullName);
+                
+                        // Add the appointment to the patient's queue
+                        patientToAddAppointment.addAppointment(newAppointment);
+                
+                        System.out.println("New appointment created and added to the queue:");
+                        System.out.println(newAppointment);
+                    } else {
+                        System.out.println("Patient not found.");
+                    }
+                    break;
+
                     case 5:
-                        //call next patient in
+                        // call next patient in
                         break;
                     case 6:
-                   try {
-                        File input = new File("patients.txt");
-                        Scanner KB = new Scanner(input);
+                        try {
+                            File input = new File("patients.txt");
+                            Scanner KB = new Scanner(input);
 
-                        while (KB.hasNextLine()) {
-                            String line = KB.nextLine();
-                            String[] values = line.split(",");
-                            String FirstName = values[0];
-                            String LastName = values[1];
-                            LocalDate dob = LocalDate.parse(values[3]);
-                            LocalDate joinedDate = LocalDate.parse(values[4]);
-                            Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
+                            while (KB.hasNextLine()) {
+                                String line = KB.nextLine();
+                                String[] values = line.split(",");
+                                String FirstName = values[0];
+                                String LastName = values[1];
+                                LocalDate dob = LocalDate.parse(values[3]);
+                                LocalDate joinedDate = LocalDate.parse(values[4]);
+                                Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
 
-                            for (int i = 4; i < values.length; i += 6) {
-                                String issue = values[i];
-                                LocalDate date = LocalDate.parse(values[i + 1]);
-                                int triageLevel = Integer.parseInt(values[i + 2]);
-                                String doctorName = values[i + 3];
+                                for (int i = 4; i < values.length; i += 6) {
+                                    String issue = values[i];
+                                    LocalDate date = LocalDate.parse(values[i + 1]);
+                                    int triageLevel = Integer.parseInt(values[i + 2]);
+                                    String doctorName = values[i + 3];
 
-                                Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel, doctorName);
-                                patient.addAppointment(ap);
+                                    Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel,
+                                            doctorName);
+                                    patient.addAppointment(ap);
+                                }
+                                practice.put(1, patient);
                             }
-                            practice.put(1, patient);
+                            KB.close();
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File was not found");
                         }
-                        KB.close();
-                    } catch (FileNotFoundException e) {
-                        System.out.println("File was not found");
-                    }
 
-                    try {
-                        File input = new File("output.txt");
-                        PrintWriter filewrite = new PrintWriter(input);
-                        Patient[] patarray = practice.getValues();
+                        try {
+                            File input = new File("output.txt");
+                            PrintWriter filewrite = new PrintWriter(input);
+                            Patient[] patarray = practice.getValues();
 
-                        for (Patient patient : patarray) {
-                            filewrite.print("," + patient.getFirstName() + " , ");
-                            filewrite.print("," + patient.getLastName() + " , ");
-                            filewrite.print("," + patient.getDateOfBirth() + " , ");
-                            filewrite.print("," + patient.getDateJoined());
+                            for (Patient patient : patarray) {
+                                filewrite.print("," + patient.getFirstName() + " , ");
+                                filewrite.print("," + patient.getLastName() + " , ");
+                                filewrite.print("," + patient.getDateOfBirth() + " , ");
+                                filewrite.print("," + patient.getDateJoined());
 
-                            LinkedList appointments = patient.getAppointments();
-                            if(!appointments.isEmpty()){
-                            for (int i = 0; i < appointments.size(); i++) {
-                                filewrite.print(" , " + appointments.get(i).getIssue());
-                                filewrite.print(" , " + appointments.get(i).getDate());
-                                filewrite.print(" , " + appointments.get(i).getTriageLevel());
-                                filewrite.print(" , " + appointments.get(i).getDoctorFullName());
+                                LinkedList appointments = patient.getAppointments();
+                                if (!appointments.isEmpty()) {
+                                    for (int i = 0; i < appointments.size(); i++) {
+                                        filewrite.print(" , " + appointments.get(i).getIssue());
+                                        filewrite.print(" , " + appointments.get(i).getDate());
+                                        filewrite.print(" , " + appointments.get(i).getTriageLevel());
+                                        filewrite.print(" , " + appointments.get(i).getDoctorFullName());
+                                    }
+                                }
+                                filewrite.println();
                             }
-                            }
-                            filewrite.println();
+                            filewrite.close();
+
+                        } catch (FileNotFoundException e) {
+                            System.out.println("File not found");
                         }
-                        filewrite.close();
 
-                    } catch (FileNotFoundException e) {
-                        System.out.println("File not found");
-                    }
-
-                    System.out.println("Exiting System");
-                    return;
+                        System.out.println("Exiting System");
+                        return;
                     default:
                         System.out.println("Invalid choice, please try again.");
                 }

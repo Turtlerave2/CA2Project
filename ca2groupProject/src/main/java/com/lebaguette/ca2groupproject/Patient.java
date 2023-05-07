@@ -142,6 +142,12 @@ public class Patient {
         appointments.add(ap);
     }
 
+    public void clearAppointments() {
+        if (appointments != null) {
+            appointments.clear();
+        }
+    }
+
     /**
      * Returns a hash code value for this Patient object.
      *
