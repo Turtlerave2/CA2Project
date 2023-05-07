@@ -21,15 +21,12 @@ public class Application {
     public static void main(String[] args) throws IOException {
         MenuOptions menu = new MenuOptions();
 
-        // hashmap object?
+
         hashmap practice = new hashmap();
         Scanner kb = new Scanner(System.in);
 
         int choice = -1;
-        // case 6 will be the reading patient file
-        // and writing to a file the data
-        // and then the program will end, so
-        // the writing will be done before program closes
+        
         do {
             menu.menu();
             try {
@@ -126,23 +123,37 @@ public class Application {
                         break;
 
                     case 5:
-                        // call next patient in
+                        PriorityQueue que = new PriorityQueue();
+                        if (que.isEmpty()) {
+                            System.out.println("No patients waiting in queue");
+                        } else {
+                            LinkedList.Node next = que.head;
+                            System.out.println("Next patient:");
+                            System.out.println("name: " + next.appointment.getFirstName() + " " + next.appointment.getLastName());
+                            System.out.println("Date of Birth: " + next.appointment.getDateOfBirth());
+                            System.out.println("Date Joined: " + next.appointment.getDate());
+                            System.out.println("Issue: " + next.appointment.getIssue());
+                            System.out.println("With Doctor " + next.appointment.getDoctorFullName());
+                            System.out.println();
+
+                        }
+
                         break;
                     case 6:
                         try {
                         File input = new File("patients.txt");
                         Scanner KB = new Scanner(input);
-
+                        int slotcount=1;
                         while (KB.hasNextLine()) {
                             String line = KB.nextLine();
                             String[] values = line.split(",");
                             String FirstName = values[0];
                             String LastName = values[1];
-                            LocalDate dob = LocalDate.parse(values[3]);
+                            LocalDate dob = LocalDate.parse(values[2]);
                             LocalDate joinedDate = LocalDate.parse(values[4]);
                             Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
 
-                            for (int i = 4; i < values.length; i += 6) {
+                            for (int i = 3; i < values.length; i += 4) {
                                 String issue = values[i];
                                 LocalDate date = LocalDate.parse(values[i + 1]);
                                 int triageLevel = Integer.parseInt(values[i + 2]);
@@ -152,7 +163,7 @@ public class Application {
                                         doctorName);
                                 patient.addAppointment(ap);
                             }
-                            practice.put(1, patient);
+                            practice.put(slotcount++, patient);
                         }
                         KB.close();
                     } catch (FileNotFoundException e) {
@@ -163,43 +174,42 @@ public class Application {
                         File input = new File("output.txt");
                         PrintWriter filewrite = new PrintWriter(input);
                         Patient[] patarray = practice.getValues();
-                        
 
-                            for (Patient patient : patarray) {
-                                filewrite.print("," + patient.getFirstName() + " , ");
-                                filewrite.print("," + patient.getLastName() + " , ");
-                                filewrite.print("," + patient.getDateOfBirth() + " , ");
-                                filewrite.print("," + patient.getDateJoined());
+                        for (Patient patient : patarray) {
+                            filewrite.print(patient.getFirstName());
+                            filewrite.print("," + patient.getLastName());
+                            filewrite.print("," + patient.getDateOfBirth());
+                            filewrite.print("," + patient.getDateJoined());
 
-                                LinkedList appointments = patient.getAppointments();
-                                if (!appointments.isEmpty()) {
-                                    for (int i = 0; i < appointments.size(); i++) {
-                                        filewrite.print(" , " + appointments.get(i).getIssue());
-                                        filewrite.print(" , " + appointments.get(i).getDate());
-                                        filewrite.print(" , " + appointments.get(i).getTriageLevel());
-                                        filewrite.print(" , " + appointments.get(i).getDoctorFullName());
-                                    }
+                            LinkedList appointments = patient.getAppointments();
+                            if (!appointments.isEmpty()) {
+                                for (int i = 0; i < appointments.size(); i++) {
+                                    filewrite.print(appointments.get(i).getIssue());
+                                    filewrite.print(" , " + appointments.get(i).getDate());
+                                    filewrite.print(" , " + appointments.get(i).getTriageLevel());
+                                    filewrite.print(" , " + appointments.get(i).getDoctorFullName());
                                 }
-                                filewrite.println();
                             }
-                            filewrite.close();
-
-                        } catch (FileNotFoundException e) {
-                            System.out.println("File not found");
+                            filewrite.println();
                         }
+                        filewrite.close();
 
-                        System.out.println("Exiting System");
-                        return;
-                    
-                default:
+                    } catch (FileNotFoundException e) {
+                        System.out.println("File not found");
+                    }
+
+                    System.out.println("Exiting System");
+                    return;
+
+                    default:
                         System.out.println("Invalid choice, please try again.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Enter a number for one of the options");
                 kb.next();
-            
+
             }
-            
-        }while (choice != 6);
+
+        } while (choice != 6);
     }
-    }
+}
