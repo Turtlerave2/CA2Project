@@ -131,6 +131,18 @@ public class Patient {
     }
 
     /**
+     * Adds a new appointment for the patient
+     *
+     * @param ap the appointment to add
+     */
+    public void addAppointment(Appointment ap) {
+        if (appointments == null) {
+            appointments = new LinkedList();
+        }
+        appointments.add(ap);
+    }
+
+    /**
      * Returns a hash code value for this Patient object.
      *
      * @return the hash code value for this Patient object.
@@ -146,8 +158,8 @@ public class Patient {
 
     /**
      * Indicates whether some other object is "equal to" this one. Patients are
-     * considered equal if they have the same first name, surname and date of birth
-     * fields.
+     * considered equal if they have the same first name, surname and date of
+     * birth fields.
      *
      * @param obj the object to compare to.
      * @return true if the objects are equal, false otherwise.
@@ -174,10 +186,10 @@ public class Patient {
     }
 
     /**
- * Returns a string representation of Patient including all variables.
- * 
- * @return a string representation of this Patient.
- */
+     * Returns a string representation of Patient including all variables.
+     *
+     * @return a string representation of this Patient.
+     */
     @Override
     public String toString() {
         return "Patient{" + "firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", dateJoined=" + dateJoined + ", appointments=" + appointments + '}';
