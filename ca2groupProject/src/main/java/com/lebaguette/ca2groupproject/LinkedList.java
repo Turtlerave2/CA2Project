@@ -161,4 +161,12 @@ public class LinkedList {
     public boolean isEmpty() {
         return size == 0;
     }
+
+    /**
+     * Removes all Appointments from the LinkedList.
+     */
+    public void clear() {
+        head = null;
+        size = 0;
+    }
 }

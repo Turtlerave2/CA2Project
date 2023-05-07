@@ -141,6 +141,14 @@ public class Patient {
         }
         appointments.add(ap);
     }
+    /**
+     * Method that removes appointments that are outstanding
+     */
+    public void clearAppointments() {
+        if (appointments != null) {
+            appointments.clear();
+        }
+    }
 
     /**
      * Returns a hash code value for this Patient object.
