@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class hashmap {
 
     //the initial capapcity of the hashmap
-    private static final int INITIAL_CAPACITY = 3;
+    private static final int INITIAL_CAPACITY = 50;
     //the array linkedlist used to store the key-value pairs
     private LinkedList<Entry>[] data;
     //the number of pairs stored in the hashmap
