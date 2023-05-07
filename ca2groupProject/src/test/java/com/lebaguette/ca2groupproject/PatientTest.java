@@ -41,7 +41,7 @@ public class PatientTest {
      */
     @Test
     public void testSetDateOfBirthaftercurrent() {
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 2, 5));
 
         assertThrows(IllegalArgumentException.class, () -> {
             b.setDateOfBirth(LocalDate.of(2024, 1, 1));
@@ -54,7 +54,7 @@ public class PatientTest {
      */
     @Test
     public void testSetDateJoinedAftercurrent() {
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2021, 2, 5));
 
         assertThrows(IllegalArgumentException.class, () -> {
             b.setDateJoined(LocalDate.of(2024, 1, 1));
