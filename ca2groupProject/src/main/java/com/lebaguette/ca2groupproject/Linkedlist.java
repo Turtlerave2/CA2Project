@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A LinkedList implementation that holds Appointment objects.
  */
-public class Linkedlist {
+public class LinkedList {
     private Node head;
     private int size;
 
@@ -22,7 +22,7 @@ public class Linkedlist {
     /**
      * Constructs an empty LinkedList.
      */
-    public Linkedlist() {
+    public LinkedList() {
         this.head = null;
         this.size = 0;
     }
