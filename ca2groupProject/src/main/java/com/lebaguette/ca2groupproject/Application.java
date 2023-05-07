@@ -54,7 +54,7 @@ public class Application {
                         practice.put(dateOfBirth.hashCode(), newPatient);
                         System.out.println("Patient added successfully.");
                     }
-                    break;
+                   
                         break;
                     case 2:
                         //delete patient
