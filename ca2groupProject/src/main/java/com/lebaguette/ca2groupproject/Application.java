@@ -62,7 +62,14 @@ public class Application {
                         //delete patient
                         break;
                     case 3:
-                        //display all patients
+                        Patient[] patients = practice.getValues();
+
+                        for (Patient patient : patients) {
+                            System.out.println("Name: " + patient.getFirstName() + " " + patient.getLastName());
+                            System.out.println("Date of birth: " + patient.getDateOfBirth());
+                            System.out.println("Date joined: " + patient.getDateJoined());
+                            System.out.println();
+                        }
                         break;
                     case 4:
                         //create new appointment for patient
@@ -100,7 +107,6 @@ public class Application {
                         System.out.println("File was not found");
                     }
 
-                  
                     try {
                         File input = new File("output.txt");
                         PrintWriter filewrite = new PrintWriter(input);
