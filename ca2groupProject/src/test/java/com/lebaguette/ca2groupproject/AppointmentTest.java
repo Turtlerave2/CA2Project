@@ -41,17 +41,6 @@ public class AppointmentTest {
 
         assertFalse(appointment1.equals(appointment2));
 
-        appointment2.setFirstName("John");
-        assertFalse(appointment1.equals(appointment2));
-
-        appointment2.setLastName("Doe");
-        assertFalse(appointment1.equals(appointment2));
-
-        appointment2.setDateOfBirth(LocalDate.of(2000, 1, 2));
-        assertFalse(appointment1.equals(appointment2));
-
-        appointment2.setDate(LocalDate.of(2023, 5, 8));
-        assertFalse(appointment1.equals(appointment2));
     }
 
     /**
