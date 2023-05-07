@@ -37,13 +37,15 @@ public class Application {
                 choice = kb.nextInt();
 
                 switch (choice) {
+                   
                     case 1:
+                        int count =1;
                         System.out.println("Enter patient details:");
                         System.out.print("First Name: ");
                         String firstName = kb.next();
                         System.out.print("Last Name: ");
                         String lastName = kb.next();
-                        System.out.print("Date of Birth (dd-mm-yyyy): ");
+                        System.out.print("Date of Birth (yyyy-mm-dd): ");
                         String dobStr = kb.next();
                         LocalDate dateOfBirth = LocalDate.parse(dobStr);
                         LocalDate dateJoined = LocalDate.now();
@@ -53,7 +55,7 @@ public class Application {
                             System.out.println("A patient with the same details already exists.");
                         } else {
                             Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
-                            practice.put(dateOfBirth.hashCode(), newPatient);
+                            practice.put(count++, newPatient);
                             System.out.println("Patient added successfully.");
                         }
 
@@ -62,7 +64,14 @@ public class Application {
                         //delete patient
                         break;
                     case 3:
-                        //display all patients
+                        Patient[] patients = practice.getValues();
+                        for(Patient patient : patients){
+                            System.out.println("Name: " + patient.getFirstName() + " " + patient.getLastName());
+                            System.out.println("Date of Birth: " + patient.getDateOfBirth());
+                            System.out.println("Date joined: " + patient.getDateJoined());
+                            System.out.println();
+                        } 
+                        
                         break;
                     case 4:
                         //create new appointment for patient
@@ -74,7 +83,7 @@ public class Application {
                    try {
                         File input = new File("patients.txt");
                         Scanner KB = new Scanner(input);
-                        int count = 1;
+                        
                         while (KB.hasNextLine()) {
                             String line = KB.nextLine();
                             String[] values = line.split(",");
@@ -83,7 +92,7 @@ public class Application {
                             LocalDate dob = LocalDate.parse(values[2]);
                             LocalDate joinedDate = LocalDate.parse(values[4]);
                             Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
-
+                            int countslot =1;
                             for (int i = 3; i < values.length; i += 4) {
                                 String issue = values[i];
                                 LocalDate date = LocalDate.parse(values[i + 1]);
@@ -93,7 +102,7 @@ public class Application {
                                 Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel, doctorName);
                                 patient.addAppointment(ap);
                             }
-                            practice.put(count++, patient);
+                            practice.put(countslot++, patient);
                         }
                         KB.close();
                     } catch (FileNotFoundException e) {
