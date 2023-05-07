@@ -196,11 +196,25 @@ public class Appointment implements Comparable<Appointment> {
                 Objects.equals(date, comp.date);
     }
 
+    /**
+     * Calculates the hash code for the object based on firstname,lastname,dob
+     * issue and date fields
+     * 
+     * @return the hash code value
+     */
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, dateOfBirth, issue, date);
     }
 
+    /**
+     * Compares the passed appointment, and checks its triage level with
+     * the class triage level
+     * 
+     * @param other appointment object to compare to
+     * @return negative, zero or positive int, if its less than, equal to or 
+     * greater than the passed object
+     */
     @Override
     public int compareTo(Appointment other) {
         return Integer.compare(triageLevel, other.triageLevel);
