@@ -49,6 +49,69 @@ public class Appointment implements Comparable<Appointment> {
     }
 
     /**
+     * Sets the first name of the patient.
+     *
+     * @param firstName the first name to set
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Sets the last name of the patient.
+     *
+     * @param lastName the last name to set
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Sets the date of birth of the patient.
+     *
+     * @param dateOfBirth the date of birth to set
+     */
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
+     * Sets the issue description of the patient.
+     *
+     * @param issue the issue description to set
+     */
+    public void setIssue(String issue) {
+        this.issue = issue;
+    }
+
+    /**
+     * Sets the date of the appointment.
+     *
+     * @param date the date of the appointment to set
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
+     * Sets the triage level of the appointment.
+     *
+     * @param triageLevel the triage level to set
+     */
+    public void setTriageLevel(int triageLevel) {
+        this.triageLevel = triageLevel;
+    }
+
+    /**
+     * Sets the full name of the doctor for the appointment.
+     *
+     * @param doctorFullName the full name of the doctor to set
+     */
+    public void setDoctorFullName(String doctorFullName) {
+        this.doctorFullName = doctorFullName;
+    }
+
+    /**
      * Returns the patient's first name.
      *
      * @return the patient's first name
@@ -156,4 +219,5 @@ public class Appointment implements Comparable<Appointment> {
     public int compareTo(Appointment other) {
         return Integer.compare(triageLevel, other.triageLevel);
     }
+
 }
