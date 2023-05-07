@@ -50,7 +50,8 @@ public class Application {
                             System.out.println("A patient with the same details already exists.");
                         } else {
                             Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
-                            practice.put(counter++, newPatient);
+                            practice.put(counter, newPatient);
+                            counter++;
                             System.out.println("Patient added successfully.");
                         }
 
@@ -59,9 +60,10 @@ public class Application {
                         System.out.print("Enter the patient's date of birth (yyyy-mm-dd): ");
                         String dobToDelete = kb.next();
                         LocalDate dateOfBirthToDelete = LocalDate.parse(dobToDelete);
-
+                        Patient del = practice.get(counter);
+                        
                         // Check if the patient exists in the practice
-                        if (practice.containsKey(counter)) {
+                        if (practice.getKeys().equals(counter)) {
                             // Retrieve the patient from the hashmap
                             Patient patientToDelete = practice.get(counter);
 
