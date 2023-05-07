@@ -36,7 +36,25 @@ public class Application {
 
                 switch (choice) {
                     case 1:
-                        //add patient
+                    System.out.println("Enter patient details:");
+                    System.out.print("First Name: ");
+                    String firstName = kb.next();
+                    System.out.print("Last Name: ");
+                    String lastName = kb.next();
+                    System.out.print("Date of Birth (dd-mm-yyyy): ");
+                    String dobStr = kb.next();
+                    LocalDate dateOfBirth = LocalDate.parse(dobStr);
+                    LocalDate dateJoined = LocalDate.now();
+                
+                    // Check if the patient already exists in the practice
+                    if (practice.containsKey(dateOfBirth.hashCode())) {
+                        System.out.println("A patient with the same details already exists.");
+                    } else {
+                        Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
+                        practice.put(dateOfBirth.hashCode(), newPatient);
+                        System.out.println("Patient added successfully.");
+                    }
+                    break;
                         break;
                     case 2:
                         //delete patient

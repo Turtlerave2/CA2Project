@@ -6,12 +6,12 @@ import java.util.Objects;
  * A LinkedList implementation that holds Appointment objects.
  */
 public class LinkedList {
-    private Node head;
-    private int size;
+    protected Node head;
+    protected int size;
 
-    private class Node {
-        private Appointment appointment;
-        private Node next;
+    protected class Node {
+        protected Appointment appointment;
+        protected Node next;
 
         public Node(Appointment appointment) {
             this.appointment = appointment;
