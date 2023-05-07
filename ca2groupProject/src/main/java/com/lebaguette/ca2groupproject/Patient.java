@@ -79,7 +79,7 @@ public class Patient {
      *
      * @return the list of appointments for the patient
      */
-    public LinkedList<Appointment> getAppointments() {
+    public LinkedList getAppointments() {
         return appointments;
     }
 
