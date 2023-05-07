@@ -6,6 +6,8 @@ package com.lebaguette.ca2groupproject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -17,7 +19,7 @@ import java.util.Scanner;
  */
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         MenuOptions menu = new MenuOptions();
 
         //hashmap object?
@@ -36,25 +38,25 @@ public class Application {
 
                 switch (choice) {
                     case 1:
-                    System.out.println("Enter patient details:");
-                    System.out.print("First Name: ");
-                    String firstName = kb.next();
-                    System.out.print("Last Name: ");
-                    String lastName = kb.next();
-                    System.out.print("Date of Birth (dd-mm-yyyy): ");
-                    String dobStr = kb.next();
-                    LocalDate dateOfBirth = LocalDate.parse(dobStr);
-                    LocalDate dateJoined = LocalDate.now();
-                
-                    // Check if the patient already exists in the practice
-                    if (practice.containsKey(dateOfBirth.hashCode())) {
-                        System.out.println("A patient with the same details already exists.");
-                    } else {
-                        Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
-                        practice.put(dateOfBirth.hashCode(), newPatient);
-                        System.out.println("Patient added successfully.");
-                    }
-                   
+                        System.out.println("Enter patient details:");
+                        System.out.print("First Name: ");
+                        String firstName = kb.next();
+                        System.out.print("Last Name: ");
+                        String lastName = kb.next();
+                        System.out.print("Date of Birth (dd-mm-yyyy): ");
+                        String dobStr = kb.next();
+                        LocalDate dateOfBirth = LocalDate.parse(dobStr);
+                        LocalDate dateJoined = LocalDate.now();
+
+                        // Check if the patient already exists in the practice
+                        if (practice.containsKey(dateOfBirth.hashCode())) {
+                            System.out.println("A patient with the same details already exists.");
+                        } else {
+                            Patient newPatient = new Patient(firstName, lastName, dateOfBirth, dateJoined);
+                            practice.put(dateOfBirth.hashCode(), newPatient);
+                            System.out.println("Patient added successfully.");
+                        }
+
                         break;
                     case 2:
                         //delete patient
@@ -72,17 +74,17 @@ public class Application {
                    try {
                         File input = new File("patients.txt");
                         Scanner KB = new Scanner(input);
-
+                        int count = 1;
                         while (KB.hasNextLine()) {
                             String line = KB.nextLine();
                             String[] values = line.split(",");
                             String FirstName = values[0];
                             String LastName = values[1];
-                            LocalDate dob = LocalDate.parse(values[3]);
+                            LocalDate dob = LocalDate.parse(values[2]);
                             LocalDate joinedDate = LocalDate.parse(values[4]);
                             Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
 
-                            for (int i = 4; i < values.length; i += 6) {
+                            for (int i = 3; i < values.length; i += 4) {
                                 String issue = values[i];
                                 LocalDate date = LocalDate.parse(values[i + 1]);
                                 int triageLevel = Integer.parseInt(values[i + 2]);
@@ -91,7 +93,7 @@ public class Application {
                                 Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel, doctorName);
                                 patient.addAppointment(ap);
                             }
-                            practice.put(1, patient);
+                            practice.put(count++, patient);
                         }
                         KB.close();
                     } catch (FileNotFoundException e) {
@@ -104,20 +106,20 @@ public class Application {
                         Patient[] patarray = practice.getValues();
 
                         for (Patient patient : patarray) {
-                            filewrite.print("," + patient.getFirstName() + " , ");
-                            filewrite.print("," + patient.getLastName() + " , ");
-                            filewrite.print("," + patient.getDateOfBirth() + " , ");
+                            filewrite.print(patient.getFirstName());
+                            filewrite.print("," + patient.getLastName());
+                            filewrite.print("," + patient.getDateOfBirth());
                             filewrite.print("," + patient.getDateJoined());
 
                             LinkedList appointments = patient.getAppointments();
-                            if(!appointments.isEmpty()){
+
                             for (int i = 0; i < appointments.size(); i++) {
                                 filewrite.print(" , " + appointments.get(i).getIssue());
                                 filewrite.print(" , " + appointments.get(i).getDate());
                                 filewrite.print(" , " + appointments.get(i).getTriageLevel());
                                 filewrite.print(" , " + appointments.get(i).getDoctorFullName());
                             }
-                            }
+
                             filewrite.println();
                         }
                         filewrite.close();
