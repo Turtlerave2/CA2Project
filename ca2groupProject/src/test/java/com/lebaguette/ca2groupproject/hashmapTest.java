@@ -30,7 +30,7 @@ public class hashmapTest {
     @org.junit.Test
     public void testSizeNonEmptyMap() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
         instance.put(2, a);
         int expResult = 1;
         int result = instance.size();
@@ -46,8 +46,8 @@ public class hashmapTest {
     @org.junit.Test
     public void testSizeAfterRemoving() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 5, 5));
         instance.put(2, a);
         instance.put(3, b);
         instance.remove(2);
@@ -65,8 +65,8 @@ public class hashmapTest {
     @org.junit.Test
     public void testSizeAddingDuplicate() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 8, 5));
         instance.put(2, a);
         instance.put(2, b);
         int expResult = 1;
@@ -83,7 +83,7 @@ public class hashmapTest {
     @org.junit.Test
     public void testPutValue() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2021, 2, 5));
         instance.put(2, a);
         Patient expResult = a;
         Patient result = instance.get(2);
@@ -100,8 +100,8 @@ public class hashmapTest {
     @org.junit.Test
     public void testPutUpdateValue() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2022, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 2, 5));
 
         instance.put(2, a);
         instance.put(2, b);
@@ -120,8 +120,8 @@ public class hashmapTest {
     @org.junit.Test
     public void testPutaddBegining() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2019, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 2, 5));
 
         instance.put(1, a);
         instance.put(2, b);
@@ -140,7 +140,7 @@ public class hashmapTest {
     @org.junit.Test
     public void testPutaddEnd() {
         hashmap instance = new hashmap();
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 2, 5));
 
         instance.put(20, b);
         Patient expResult = b;
@@ -162,18 +162,7 @@ public class hashmapTest {
             instance.put(0, null);
         });
     }
-
-    /**
-     * Test of put method, of class hash map. putting empty value
-     */
-    @org.junit.Test
-    public void testPutEmptyKey() {
-        hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        assertThrows(IllegalArgumentException.class, () -> {
-            instance.put(2, a);
-        });
-    }
+ 
 
     /**
      * Test of get method, of class hash map. with empty map
@@ -192,7 +181,7 @@ public class hashmapTest {
     @org.junit.Test
     public void testGetwithValues() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.now());
+        Patient a = new Patient("Liam", "john", LocalDate.of(2001, 1, 1), LocalDate.of(2020, 2, 5));
 
         instance.put(1, a);
         Patient b = instance.get(1);
@@ -220,9 +209,9 @@ public class hashmapTest {
     @org.junit.Test
     public void testRemoveEmpty() {
         hashmap instance = new hashmap();
-        assertThrows(IllegalArgumentException.class, () -> {
-            instance.remove(1);
-        });
+       String expected = null;
+       Patient actual = instance.remove(1);
+       assertEquals(expected,actual);
     }
 
     /**
@@ -231,9 +220,9 @@ public class hashmapTest {
     @org.junit.Test
     public void testRemoveValue() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
-        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.of(2021, 2, 5));
+        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.of(2022, 2, 5));
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
@@ -255,15 +244,15 @@ public class hashmapTest {
     @org.junit.Test
     public void testRemoveValuelast() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
-        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.of(2021, 2, 5));
+        Patient c = new Patient("adam", "john", LocalDate.of(2002, 3, 1), LocalDate.of(2022, 2, 5));
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
 
         Patient removed = instance.remove(3);
-        assertEquals(removed, a);
+        assertEquals(removed, c);
 
         int excSize = 2;
         int actualSize = instance.size();
@@ -304,8 +293,8 @@ public class hashmapTest {
     @org.junit.Test
     public void testContainsKeyvalues() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.of(2021, 2, 5));
         instance.put(1, a);
         instance.put(2, b);
         
@@ -328,9 +317,9 @@ public class hashmapTest {
     @org.junit.Test
     public void testGetKeys() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
-        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.of(2021, 2, 5));
+        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.of(2022, 2, 5));
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
@@ -365,9 +354,9 @@ public class hashmapTest {
     @org.junit.Test
     public void testGetValuesWithValues() {
         hashmap instance = new hashmap();
-        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.now());
-        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.now());
-        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.now());
+        Patient a = new Patient("John", "Doe", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 2, 5));
+        Patient b = new Patient("Liam", "john", LocalDate.of(2001, 3, 1), LocalDate.of(2021, 2, 5));
+        Patient c = new Patient("adam", "west", LocalDate.of(2003, 3, 1), LocalDate.of(2022, 2, 5));
         instance.put(1, a);
         instance.put(2, b);
         instance.put(3, c);
