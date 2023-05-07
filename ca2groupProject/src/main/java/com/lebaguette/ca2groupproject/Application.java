@@ -62,10 +62,18 @@ public class Application {
                             String LastName = values[1];
                             LocalDate dob = LocalDate.parse(values[3]);
                             LocalDate joinedDate = LocalDate.parse(values[4]);
-                            //need to add to like a hospital practice? gp?
                             Patient patient = new Patient(FirstName, LastName, dob, joinedDate);
 
-                            //here
+                            for (int i = 4; i < values.length; i += 6) {
+                                String issue = values[i];
+                                LocalDate date = LocalDate.parse(values[i + 1]);
+                                int triageLevel = Integer.parseInt(values[i + 2]);
+                                String doctorName = values[i + 3];
+
+                                Appointment ap = new Appointment(FirstName, LastName, dob, issue, date, triageLevel, doctorName);
+                                patient.addAppointment(ap);
+                            }
+                            practice.put(1, patient);
                         }
                         KB.close();
                     } catch (FileNotFoundException e) {
@@ -75,11 +83,24 @@ public class Application {
                     try {
                         File input = new File("output.txt");
                         PrintWriter filewrite = new PrintWriter(input);
+                        Patient[] patarray = practice.getValues();
 
-                        for (Patient patient
-                                : // get from the hospital practice) 
-                                 {
-                            filewrite.println(patient.getFirstName() + " , " + patient.getLastName() + " , " + patient.getDateOfBirth().toString() + " , " + patient.getDateJoined().toString());
+                        for (Patient patient : patarray) {
+                            filewrite.print("," + patient.getFirstName() + " , ");
+                            filewrite.print("," + patient.getLastName() + " , ");
+                            filewrite.print("," + patient.getDateOfBirth() + " , ");
+                            filewrite.print("," + patient.getDateJoined());
+
+                            LinkedList appointments = patient.getAppointments();
+                            if(!appointments.isEmpty()){
+                            for (int i = 0; i < appointments.size(); i++) {
+                                filewrite.print(" , " + appointments.get(i).getIssue());
+                                filewrite.print(" , " + appointments.get(i).getDate());
+                                filewrite.print(" , " + appointments.get(i).getTriageLevel());
+                                filewrite.print(" , " + appointments.get(i).getDoctorFullName());
+                            }
+                            }
+                            filewrite.println();
                         }
                         filewrite.close();
 
